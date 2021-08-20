@@ -11,6 +11,10 @@ class AlienInvasion:
         """Game init and creating of the game resources"""
         pygame.init()
         self.settings = Settings()
+        #  Полноэкранный режим
+        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # self.settings.screen_width = self.screen.get_rect().width
+        # self.settings.screen_height = self.screen.get_rect().height
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_hight)
         )
@@ -21,6 +25,7 @@ class AlienInvasion:
         """Запуск основного цикла игры."""
         while True:  # Отслеживание событий клавиатуры и мыши.
             self._chech_events()
+            self.ship.update()
             self._update_screen()
 
     def _chech_events(self):
@@ -28,6 +33,26 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        """Реагирует на нажатие клавиш."""
+        if event.key == pygame.K_LEFT:  # Переместить корабль влево.
+            self.ship.moving_left = True
+        elif event.key == pygame.K_RIGHT:  # Переместить корабль вправо.
+            self.ship.moving_right = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+
+    def _check_keyup_events(self, event):
+        """Реагирует на отпускание клавиш."""
+        if event.key == pygame.K_LEFT:  # Переместить корабль влево.
+            self.ship.moving_left = False
+        elif event.key == pygame.K_RIGHT:  # Переместить корабль вправо.
+            self.ship.moving_right = False
 
     def _update_screen(self):
         """Обновляет изображения на экране и отображает новый экран."""

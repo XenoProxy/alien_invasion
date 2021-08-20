@@ -6,3 +6,5 @@ class Settings:
         self.screen_width = 1200
         self.screen_hight = 800
         self.bg_color = (255, 255, 255)
+        # Настройки корабля
+        self.ship_speed = 0.5
