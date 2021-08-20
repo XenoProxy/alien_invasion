@@ -12,6 +12,16 @@ class Ship:
         self.image = pygame.transform.scale(img, (70, 120))
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom  # Каждый новый корабль появляется у нижнего края экрана.
+        # Флаги перемещения
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        """Обновляет позицию корабля с учетом флага."""
+        if self.moving_right:
+            self.rect.x += 2
+        elif self.moving_left:
+            self.rect.x -= 2
 
     def blitme(self):
         """Рисует корабль в текущей позиции."""

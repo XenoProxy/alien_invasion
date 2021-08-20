@@ -21,6 +21,7 @@ class AlienInvasion:
         """Запуск основного цикла игры."""
         while True:  # Отслеживание событий клавиатуры и мыши.
             self._chech_events()
+            self.ship.update()
             self._update_screen()
 
     def _chech_events(self):
@@ -30,9 +31,14 @@ class AlienInvasion:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:  # Переместить корабль вправо.
-                    self.ship.rect.x += 2
+                    self.ship.moving_right = True
                 elif event.key == pygame.K_LEFT:  # Переместить корабль влево.
-                    self.ship.rect.x -= 2
+                    self.ship.moving_left = True
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:  # Переместить корабль вправо.
+                    self.ship.moving_right = False
+                elif event.key == pygame.K_LEFT:  # Переместить корабль влево.
+                    self.ship.moving_left = False
 
     def _update_screen(self):
         """Обновляет изображения на экране и отображает новый экран."""
